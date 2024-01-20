@@ -1,11 +1,11 @@
-const express = require('express');
+import express from 'express';
 
 const app = express();
 
 app.get('/', async (req, res) => {
   console.log('hello from express');
   res.status(200);
-  res.json({message: 'hello'});
+  res.json({ message: 'hello' });
 });
 
-module.exports = app;
+export default app;
