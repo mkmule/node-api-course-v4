@@ -2,31 +2,18 @@ import { Router } from 'express';
 import { body } from 'express-validator';
 import { handleInputErrors } from './modules/middleware';
 import { UPDATE_STATUS } from '@prisma/client';
+import { createProduct, deleteProduct, getOneProduct, getProducts, updateProduct } from './handlers/products';
 
 const router = Router();
 
 /**
  * Product
  */
-router.get('/product', (req, res) => {
-  res.json({ message: 'hello' });
-});
-router.get('/product/:id', () => {});
-router.post('/product',
-  body('name').isString(),
-  handleInputErrors,
-  (req, res) => {
-
-  },
-);
-router.put('/product/:id',
-  body('name').isString(),
-  handleInputErrors,
-  (req, res) => {
-
-  },
-);
-router.delete('/product/:id', () => {});
+router.get('/product', getProducts);
+router.get('/product/:id', getOneProduct);
+router.post('/product', body('name').isString(), handleInputErrors, createProduct);
+router.put('/product/:id', body('name').isString(), handleInputErrors, updateProduct);
+router.delete('/product/:id', deleteProduct);
 
 /**
  * Update
