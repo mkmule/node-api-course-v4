@@ -3,6 +3,7 @@ import { body } from 'express-validator';
 import { handleInputErrors } from './modules/middleware';
 import { UPDATE_STATUS } from '@prisma/client';
 import { createProduct, deleteProduct, getOneProduct, getProducts, updateProduct } from './handlers/products';
+import { createUpdate, deleteUpdate, getOneUpdate, getUpdates, updateUpdate } from './handlers/update';
 
 const router = Router();
 
@@ -18,21 +19,24 @@ router.delete('/product/:id', deleteProduct);
 /**
  * Update
  */
-router.get('/update', () => {});
-router.get('/update/:id', () => {});
-router.put('/update/:id',
-  body('title').optional().isString(),
-  body('body').optional().isString(),
-  body('status').isIn([UPDATE_STATUS.IN_PROGRESS, UPDATE_STATUS.SHIPPED, UPDATE_STATUS.DEPRECATED]),
-  body('version').optional().isString(),
-  handleInputErrors,
-  () => {});
+router.get('/update', getUpdates);
+router.get('/update/:id', getOneUpdate);
 router.post('/update',
   body('title').exists().isString(),
   body('body').exists().isString(),
+  body('productId').exists().isString(),
   handleInputErrors,
-  () => {});
-router.delete('/update/:id', () => {});
+  createUpdate,
+);
+router.put('/update/:id',
+  body('title').optional().isString(),
+  body('body').optional().isString(),
+  body('status').optional().isIn([UPDATE_STATUS.IN_PROGRESS, UPDATE_STATUS.SHIPPED, UPDATE_STATUS.DEPRECATED]),
+  body('version').optional().isString(),
+  handleInputErrors,
+  updateUpdate,
+);
+router.delete('/update/:id', deleteUpdate);
 
 /**
  * Update point
