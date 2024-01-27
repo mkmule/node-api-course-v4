@@ -25,4 +25,13 @@ app.use('/api', protect, router);
 app.post('/user', createNewUser);
 app.post('/sign-in', signIn);
 
+app.get('/error', (req, res) => {
+  throw new Error('Oh no, it happened!');
+});
+app.use((err, req, res, next) => {
+  console.log(err);
+  // res.status(500);
+  res.json({ message: 'oops, there was an error' });
+});
+
 export default app;
