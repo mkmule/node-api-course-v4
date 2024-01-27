@@ -36,10 +36,23 @@ app.get('/error-sync', (req, res, next) => {
   }, 1);
 });
 
-app.use((err, req, res, next) => {
-  console.log(err);
-  // res.status(500);
-  res.json({ message: 'oops, there was an error' });
-});
+const handleError = (err, req, res, next) => {
+  console.error(err);
+  switch (err.type) {
+    case 'auth': {
+      res.status(401).json({ message: 'unauthorized' });
+      break;
+    }
+    case 'input': {
+      res.status(400).json({ message: 'invalid input' });
+      break;
+    }
+    default: {
+      res.status(500).json({ message: 'oops, we are working on it' });
+    }
+  }
+};
+app.use(handleError);
+router.use(handleError);
 
 export default app;
