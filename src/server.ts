@@ -36,6 +36,7 @@ app.get('/error-sync', (req, res, next) => {
   }, 1);
 });
 
+// Error handling (express)
 const handleError = (err, req, res, next) => {
   console.error(err);
   switch (err.type) {
