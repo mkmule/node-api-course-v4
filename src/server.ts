@@ -28,6 +28,14 @@ app.post('/sign-in', signIn);
 app.get('/error', (req, res) => {
   throw new Error('Oh no, it happened!');
 });
+app.get('/error-sync', (req, res, next) => {
+  // Async errors need to be handled manually
+
+  setTimeout(() => {
+    next(new Error('Oh no, it happened!'));
+  }, 1);
+});
+
 app.use((err, req, res, next) => {
   console.log(err);
   // res.status(500);
