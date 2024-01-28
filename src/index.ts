@@ -1,5 +1,6 @@
 import * as dotenv from 'dotenv';
 import app from './server';
+import config from './config';
 
 dotenv.config();
 
@@ -11,6 +12,6 @@ process.on('unhandledRejection', () => {
 // do something here
 });
 
-app.listen(3001, () => {
-  console.log('server started on http://localhost:3001');
+app.listen(config.port, () => {
+  console.log(`server started on http://localhost:${config.port}`);
 });
